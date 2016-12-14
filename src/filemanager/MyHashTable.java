@@ -16,9 +16,13 @@ public class MyHashTable {
     private Value [] values;
     private int size;
     private final int TABLE_LENGTH;
+    private long sourceSize;
+    private long destSize;
     
     public MyHashTable(int length){
         size = 0;
+        sourceSize = 0;
+        destSize = 0;
         values = new Value[length];
         this.TABLE_LENGTH = length;
     }
@@ -27,30 +31,37 @@ public class MyHashTable {
         return this.size;
     }
     
-    public void put(Value value){
+    public void put(Value value){        
         if (size == TABLE_LENGTH) {
             throw new MyHashTableException("Table is full!");
         }
         int hash = (int)value.getSizeInBytes() % TABLE_LENGTH;
         if (values[hash] == null) {
             values[hash] = value;
+            destSize += value.getSizeInBytes();
             size++;
         }
-        else {            
-            if (values[hash].getSizeInBytes() != value.getSizeInBytes()) {
+        else { 
+            if (values[hash].isSameValue(value)) {
+                values[hash].increaseQuantity();
+            }
+            else{
                 while(values[hash] != null){
-                    hash++;
+                    hash++;                    
                     if (hash == TABLE_LENGTH) {
                         hash = 0;
                     }
-                }
+                    if (values[hash] != null && values[hash].isSameValue(value)) {
+                        values[hash].increaseQuantity();
+                        return;
+                    }
+                }               
                 values[hash] = value;
                 size++;
-            }
-            else if (values[hash].isSameValue(value)) {
-                values[hash].increaseQuantity();
+                destSize += value.getSizeInBytes();
             }
         }
+        sourceSize += value.getSizeInBytes();
     }
     
     public Value[] getValues(){
@@ -64,7 +75,14 @@ public class MyHashTable {
         }
         return v;
     }
-            
+    
+    public long getSourceSize(){        
+        return this.sourceSize;
+    }
+          
+    public long getDestSize(){        
+        return this.destSize;
+    }
     
     public File[] getValueFile(){
         File [] file = new File[size];
