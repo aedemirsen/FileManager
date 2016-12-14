@@ -293,6 +293,7 @@ public class JFileManager extends javax.swing.JFrame {
                         value.getFile().length()/1024, value.getQuantity()};
                     dtm.addRow(row);
                     dlm2.addElement(i+"-"+value.getFile().getName());
+                    i++;
 
                 } catch (IOException ex) {
                     Logger.getLogger(JFileManager.class.getName()).log(Level.SEVERE, null, ex);
