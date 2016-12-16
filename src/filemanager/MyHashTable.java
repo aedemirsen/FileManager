@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class MyHashTable {
      
-    private Value [] values;
+    private final Value [] values;
     private int size;
     private final int TABLE_LENGTH;
     private long sourceSize;
