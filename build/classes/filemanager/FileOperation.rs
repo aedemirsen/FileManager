@@ -1,0 +1,2 @@
+filemanager.FileOperation
+filemanager.StringOperation
