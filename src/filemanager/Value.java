@@ -22,7 +22,7 @@ public class Value {
     private final long sizeInBytes;
     private final String fileName;
 
-    public Value(File f, long sizeInBytes) {
+    public Value(File f, Long sizeInBytes) {
         this.file = f;
         this.sizeInBytes = sizeInBytes;
         this.quantity = 1;

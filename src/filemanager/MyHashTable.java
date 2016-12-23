@@ -35,10 +35,11 @@ public class MyHashTable {
         if (size == TABLE_LENGTH) {
             throw new MyHashTableException("Table is full!");
         }
-        int hash = (int) value.getSizeInBytes() % TABLE_LENGTH;
+        long l = value.getSizeInBytes();       
+        int hash = (int)(value.getSizeInBytes() % TABLE_LENGTH);
         if (values[hash] == null) {
             values[hash] = value;
-            destSize += value.getSizeInBytes();
+            destSize += (long)value.getSizeInBytes();
             size++;
         } else if (values[hash].isSameValue(value)) {
             values[hash].increaseQuantity();
@@ -55,9 +56,9 @@ public class MyHashTable {
             }
             values[hash] = value;
             size++;
-            destSize += value.getSizeInBytes();
+            destSize += (long)value.getSizeInBytes();
         }
-        sourceSize += value.getSizeInBytes();
+        sourceSize += (long)value.getSizeInBytes();
     }
 
     public Value[] getValues() {

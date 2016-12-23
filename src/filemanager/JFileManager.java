@@ -14,7 +14,6 @@ import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,9 +25,8 @@ public class JFileManager extends javax.swing.JFrame {
     File sourceDirectory, destinationDirectory;
     DefaultTableModel dtm = new DefaultTableModel();
     DefaultListModel dlm1 = new DefaultListModel();
-    DefaultListModel dlm2 = new DefaultListModel();
     DefaultBoundedRangeModel brm = new DefaultBoundedRangeModel();
-    
+    File[] sourceFiles;
 
     MyHashTable hashTable;
 
@@ -40,11 +38,11 @@ public class JFileManager extends javax.swing.JFrame {
 
         this.setTitle("FILE MANAGER");
         jList1.setModel(dlm1);
-        jList2.setModel(dlm2);
         jTable1.setModel(dtm);
         jProgressBar1.setModel(brm);
         String columns[] = {"file", "extension", "size(KB)", "quantity"};
         dtm.setColumnIdentifiers(columns);
+
     }
 
     /**
@@ -64,10 +62,7 @@ public class JFileManager extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -77,9 +72,7 @@ public class JFileManager extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FILE MANAGER");
@@ -91,6 +84,8 @@ public class JFileManager extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         jButton2.setText("Destination Directory");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,13 +93,11 @@ public class JFileManager extends javax.swing.JFrame {
             }
         });
 
+        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         jScrollPane1.setViewportView(jList1);
 
-        jScrollPane2.setViewportView(jList2);
-
         jLabel1.setText("Source:");
-
-        jLabel2.setText("Destination:");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,6 +120,7 @@ public class JFileManager extends javax.swing.JFrame {
 
         jLabel6.setText("Completed!");
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton3.setText("START");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,23 +132,7 @@ public class JFileManager extends javax.swing.JFrame {
 
         jTextField3.setEditable(false);
 
-        jLabel8.setText("Preferences:");
-
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Create a new directory");
-        jRadioButton1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioButton1ItemStateChanged(evt);
-            }
-        });
-
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Change the existing directory");
-        jRadioButton2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioButton1ItemStateChanged(evt);
-            }
-        });
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,32 +150,27 @@ public class JFileManager extends javax.swing.JFrame {
                         .addComponent(jTextField2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(jRadioButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(jRadioButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel3)
                 .addGap(110, 110, 110)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(135, 135, 135)
                 .addComponent(jLabel6)
@@ -222,30 +195,21 @@ public class JFileManager extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
+                .addContainerGap())
         );
 
         pack();
@@ -253,7 +217,7 @@ public class JFileManager extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
         dlm1.clear();
         long size = 0;
         JFileChooser fc = new JFileChooser();
@@ -262,13 +226,14 @@ public class JFileManager extends javax.swing.JFrame {
         sourceDirectory = fc.getSelectedFile();
         if (sourceDirectory != null) {
             jTextField1.setText(sourceDirectory.toPath().toString());
-            File[] files;
-            files = sourceDirectory.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                dlm1.addElement((i + 1) + "-" + files[i].getName());
-                size += files[i].length();
+            sourceFiles = sourceDirectory.listFiles();
+            for (int i = 0; i < sourceFiles.length; i++) {
+                if (!sourceFiles[i].getName().equals("Thumbs.db")) {
+                    dlm1.addElement((i + 1) + "-" + sourceFiles[i].getName());
+                    size += sourceFiles[i].length();
+                }
             }
-            jLabel1.setText("Source: "+files.length+"("+size/1000000+"mb)");
+            jLabel1.setText("Source: " + (dlm1.getSize()) + "(" + size / 1000000 + "mb)");
             brm.setValue(brm.getValue() + 25);
             jLabel3.setText("Source Located");
         }
@@ -277,42 +242,40 @@ public class JFileManager extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        dlm2.clear();
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fc.showOpenDialog(this);
         destinationDirectory = fc.getSelectedFile();
         if (destinationDirectory != null) {
             jTextField2.setText(destinationDirectory.toPath().toString());
-            File[] files;
-            files = destinationDirectory.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                dlm2.addElement((i + 1) + "-" + files[i].getName());
-            }
-            jLabel2.setText("Destination: "+files.length+"(0 mb)");
             brm.setValue(brm.getValue() + 25);
-            jLabel4.setVisible(true);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:    
+        boolean isThereBig = false;
         if (sourceDirectory == null) {
             JOptionPane.showMessageDialog(this, "Please choose a source directory.");
         } else if (destinationDirectory == null) {
             JOptionPane.showMessageDialog(this, "Please choose a destination directory.");
-        } else {
+        } else {        
             long begin = System.nanoTime();
-            File files1[] = sourceDirectory.listFiles();
-            hashTable = new MyHashTable(files1.length);
-            for (File file : files1) {
+            hashTable = new MyHashTable(sourceFiles.length);
+            for (File file : sourceFiles) {
                 long size = file.length();
                 Value value = new Value(file, size);
-                hashTable.put(value);
+                if (size > Integer.MAX_VALUE) {
+                    isThereBig = true;
+                    continue;
+                }
+                if (!file.getName().equals("Thumbs.db")) {
+                    hashTable.put(value);
+                }
             }
             brm.setValue(brm.getValue() + 25);
-            Value [] values = hashTable.getValues();
+            Value[] values = hashTable.getValues();
             int i = 1;
             for (Value value : values) {
                 try {
@@ -322,39 +285,27 @@ public class JFileManager extends javax.swing.JFrame {
                     FileOperation.write(b, destinationDirectory.toString().
                             concat("/").concat(value.getFile().getName()));
                     Object row[] = {value.getFile().getName(), FileOperation.
-                            getFileExtension(value.getFile().toString()), 
-                        value.getFile().length()/1024, value.getQuantity()};
+                        getFileExtension(value.getFile().toString()),
+                        value.getFile().length() / 1024, value.getQuantity()};
                     dtm.addRow(row);
-                    dlm2.addElement(i+"-"+value.getFile().getName());
                     i++;
 
-                } catch (IOException ex) {
+                } catch (IOException | OutOfMemoryError ex) {
                     Logger.getLogger(JFileManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            jLabel2.setText("Destination: "+values.length+"("+hashTable.getDestSize()/1000000+"mb)");
             brm.setValue(brm.getValue() + 25);
-            jButton3.setEnabled(false);
             long end = System.nanoTime();
-            jTextField3.setText((end-begin)/1000000000 + " sn");
+            jTextField3.setText((double) (end - begin) / 1000000000 + " sn");
+            jLabel9.setText(hashTable.getSize() + " file selected. Size of the"
+                    + " new file : " + hashTable.getDestSize() / 1000000 + "mb");
+            if (isThereBig) {
+                JOptionPane.showMessageDialog(this, "There is a big file in source: \n Could not be read");
+            }
         }
-       
-        
 
 
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jRadioButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButton1ItemStateChanged
-        // TODO add your handling code here:
-        JRadioButton rb = (JRadioButton) evt.getSource();
-        if (rb.equals(jRadioButton1)) {
-             System.out.println("b");
-        }
-        else if (rb.equals(jRadioButton2)) {
-            System.out.println("a");
-        }
-        
-    }//GEN-LAST:event_jRadioButton1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -372,20 +323,17 @@ public class JFileManager extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFileManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFileManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFileManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JFileManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
                 new JFileManager().setVisible(true);
             }
         });
@@ -395,22 +343,17 @@ public class JFileManager extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    public static javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
